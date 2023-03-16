@@ -32,3 +32,11 @@ def unauth():
       Unauth
     """
     return abort(401)
+
+
+@app_views.route('/forbidden', methods=['GET'], strict_slashes=False)
+def forbidden():
+    """
+      403 forbidden
+    """
+    return abort(403)
