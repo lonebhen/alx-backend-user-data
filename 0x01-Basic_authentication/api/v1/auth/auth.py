@@ -16,15 +16,19 @@ class Auth:
         '''require auth'''
         if path is None:
             return True
-        if excluded_paths is None:
+        elif excluded_paths is None or excluded_paths == []:
             return True
-        if len(excluded_paths) == 0:
-            return True
-        if path is None or excluded_paths is None:
-            return True
-        path = path + '/' if path[-1] != '/' else path
-        if path in excluded_paths:
+        elif path in excluded_paths:
             return False
+        else:
+            for i in excluded_paths:
+                if i.startswith(path):
+                    return False
+                if path.startswith(i):
+                    return False
+                if i[-1] == "*":
+                    if path.startswith(i[:-1]):
+                        return False
         return True
 
     def authorization_header(self, request=None) -> str:
